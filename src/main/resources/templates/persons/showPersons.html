@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Products</title>
+    <style>
+        .table_persons{
+            margin: 40px auto;
+            text-align: center;
+        }
+        .header_persons{
+            text-align: center;
+            color: dimgrey;
+        }
+    </style>
+</head>
+
+<body>
+<h1 class="header_persons">Persons</h1>
+<table class="table_persons" border="2px" width="80%" bgcolor="#fff8dc">
+    <thead>
+    <tr>
+        <th style="width: 40%">Name</th>
+        <th style="width: 20%">Email</th>
+        <th style="width: 20%">Phone Number</th>
+    </tr>
+    </thead>
+    <tr th:each="person: ${persons}">
+        <td><a th:href="@{/persons/{id}(id=${person.getId()})}"
+               th:text="${person.getFirstName()}">firstName</a>
+            <a th:href="@{/persons/{id}(id=${person.getId()})}"
+               th:text="${person.getLastName()}">lastName</a>
+        </td>
+        <td th:text="${person.getEmail()}">email</td>
+        <td th:text="${person.getPhoneNumber()}">phoneNumber</td>
+    </tr>
+</table>
+
+<br/>
+<hr/>
+<a th:href="@{/persons/new}">Add new Person</a>
+
+</body>
+</html>

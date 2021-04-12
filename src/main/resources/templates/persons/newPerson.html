@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>New Person</title>
+    <style>
+        .add_person_form{
+            display: flex;
+            flex-direction: column;
+        }
+        .error_new{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<form class="add_person_form" th:method="POST" th:action="@{/persons}" th:object="${person}">
+    <label for="firstName">Enter firstname: </label>
+    <input type="text" th:field="*{firstName}" id="firstName">
+    <div class="error_new" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">firstNameError</div>
+    <label for="lastName">Enter lastname: </label>
+    <input type="text" th:field="*{lastName}" id="lastName">
+    <div class="error_new" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">lastNameError</div>
+    <label for="email">Enter Email: </label>
+    <input type="text" th:field="*{email}" id="email">
+    <div class="error_new" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">emailError</div>
+    <label for="phoneNumber">Enter phoneNumber: </label>
+    <input type="text" th:field="*{phoneNumber}" id="phoneNumber">
+    <div class="error_new" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">phoneNumberError</div>
+    <label for="login">Enter login: </label>
+    <input type="text" th:field="*{login}" id="login">
+    <label for="password">Enter password: </label>
+    <input type="text" th:field="*{password}" id="password">
+    <div sec:authorize="hasRole('SUPER-ADMIN')">
+        <label for="role">Enter role: </label>
+        <input type="text" th:field="*{role}" id="role">
+    </div>
+    <br>
+    <input type="submit" value="Add Person">
+</form>
+
+</body>
+</html>
