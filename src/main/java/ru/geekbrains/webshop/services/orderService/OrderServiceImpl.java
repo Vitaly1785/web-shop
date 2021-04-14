@@ -2,6 +2,7 @@ package ru.geekbrains.webshop.services.orderService;
 
 import org.springframework.stereotype.Service;
 import ru.geekbrains.webshop.dao.OrderDao;
+import ru.geekbrains.webshop.dto.OrderDto;
 import ru.geekbrains.webshop.entity.Order;
 import ru.geekbrains.webshop.entity.Person;
 import ru.geekbrains.webshop.entity.Product;
@@ -24,23 +25,13 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Integer addProductQuantity(Long productId, Integer quantity, Person person) {
-        Integer addedQuantity = quantity;
-        Product product = productService.findById(productId);
-        Order order = orderDao.findByPersonAndProduct(person, product);
-        if (order != null){
-            addedQuantity = order.getQuantity() + quantity;
-            order.setQuantity(addedQuantity);
-        } else{
-            order = new Order();
-            order.setQuantity(quantity);
-            order.setProduct(product);
-            order.setPerson(person);
-        }
-
+    public Order createOrder(Person person, OrderDto orderDto) {
+        Order order = new Order();
+        order.setPerson(person);
+        order.setProduct(orderDto.getProduct());
+        order.setQuantity(orderDto.getQuantity());
         orderDao.save(order);
-        return addedQuantity;
+        return order;
     }
-
 
 }

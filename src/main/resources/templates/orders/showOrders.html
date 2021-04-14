@@ -14,13 +14,14 @@
         <th style="width: 40%">Id</th>
         <th style="width: 20%">Title</th>
         <th style="width: 20%">Price</th>
+        <th style="width: 20%">Quantity</th>
     </tr>
     </thead>
     <tr th:each="order: ${order}">
         <td th:text="${order.getId()}">Id</td>
         <td th:text="${order.getProduct().getTitle()}">Title</td>
-
         <td th:text="${order.getProduct().getPrice()}">Price</td>
+        <td th:text="${order.getQuantity()}">Quantity</td>
     </tr>
 </table>
 </body>

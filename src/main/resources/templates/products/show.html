@@ -8,27 +8,52 @@
             background-color: yellowgreen;
             padding:5px;margin:10px 0px 0px 10px;display:inline-block}
         span.selected{background:#ccf;}
+       .button_form{
+           background-color: dodgerblue;
+           border: 1px;
+           color: wheat;
+           padding: 3px 5px;
+           text-align: center;
+           text-decoration: none;
+           display: inline-block;
+           font-size: 10px;
+           font-weight: bold;
+           margin: 5px 8px;
+           border-radius: 50%;
+       }
+       .order{
+           border: dimgrey 1px;
+           border-radius: 5%;
+           background-color: coral;
+           color: #ccccff;
+           text-align: center;
+           text-decoration: none;
+           display: inline-block;
+       }
+       .price_holder{
+           display: flex;
+           justify-content: center;
+       }
     </style>
 </head>
 
 <body>
 
-<form th:method="POST" th:action="@{/{sorted}(sorted=${'ASC'})}">
-    <input type="submit" value="Minimum">
-</form>
-<form th:method="POST" th:action="@{/{sorted}(sorted=${'DESC'})}">
-    <input type="submit" value="Maximum">
-</form>
-<form th:method="POST" th:action="@{/{sorted}(sorted=${'None'})}">
-    <input type="submit" value="Default">
-</form>
-
-<a th:href="@{/orders/{login}(login=${person})}">Orders</a>
+<a class="order" th:href="@{/orders/{login}(login=${person})}">Orders</a>
 <table border="1px" width="100%" bgcolor="silver">
     <thead>
     <tr>
         <th style="width: 40%">Product</th>
-        <th style="width: 20%">Price</th>
+        <th class="price_holder">Price <form th:method="POST" th:action="@{/{sorted}(sorted=${'ASC'})}">
+            <input class="button_form" type="submit" value="Ʌ">
+        </form>
+            <form th:method="POST" th:action="@{/{sorted}(sorted=${'DESC'})}">
+                <input class="button_form" type="submit" value="V">
+            </form>
+            <form th:method="POST" th:action="@{/{sorted}(sorted=${'None'})}">
+                <input class="button_form" type="submit" value="-">
+            </form>
+        </th>
     </tr>
     </thead>
     <tr th:each="product: ${page}">
@@ -36,9 +61,7 @@
                th:text="${product.getTitle()}">product</a></td>
         <td th:text="${product.price}">price</td>
         <td align="center">
-            <form th:method="POST" th:action="@{/{id}(id=${product.getId()})}">
-                <input type="submit" value="Add Product">
-            </form>
+            <a th:href="@{/orders/newOrder}">Add Product to Order</a>
         </td>
     </tr>
 </table>

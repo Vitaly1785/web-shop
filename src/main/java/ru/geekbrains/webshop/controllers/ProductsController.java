@@ -8,8 +8,12 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.webshop.dto.OrderDto;
 import ru.geekbrains.webshop.dto.ProductDto;
+import ru.geekbrains.webshop.entity.Order;
 import ru.geekbrains.webshop.entity.Product;
+import ru.geekbrains.webshop.services.orderService.OrderService;
+import ru.geekbrains.webshop.services.personService.PersonService;
 import ru.geekbrains.webshop.services.productService.ProductService;
 
 
@@ -17,11 +21,15 @@ import ru.geekbrains.webshop.services.productService.ProductService;
 @RequestMapping("/")
 public class ProductsController {
     private final ProductService productService;
+    private final PersonService personService;
+    private final OrderService orderService;
 
     private String sortMethod = "ASC";
 
-    public ProductsController(ProductService productService) {
+    public ProductsController(ProductService productService, PersonService personService, OrderService orderService) {
         this.productService = productService;
+        this.personService = personService;
+        this.orderService = orderService;
     }
 
     @GetMapping
