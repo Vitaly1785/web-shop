@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<databaseChangeLog xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog">
+    <changeSet id="create_table" author="v.petukhov">
+        <createTable tableName="products">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="price" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1" author="v.petukhov">
+        <insert tableName="products">
+            <column name="title" value="Butter"/>
+            <column name="price" value="8"/>
+        </insert>
+    </changeSet>
+    <changeSet id="2" author="v.petukhov">
+        <insert tableName="products">
+            <column name="title" value="Cucumber"/>
+            <column name="price" value="5"/>
+        </insert>
+    </changeSet>
+    <changeSet id="3" author="v.petukhov">
+        <insert tableName="products">
+            <column name="title" value="Bread"/>
+            <column name="price" value="2"/>
+        </insert>
+    </changeSet>
+    <changeSet id="4" author="v.petukhov">
+        <insert tableName="products">
+            <column name="title" value="Potato"/>
+            <column name="price" value="7"/>
+        </insert>
+    </changeSet>
+    <changeSet id="5" author="v.petukhov">
+        <insert tableName="products">
+            <column name="title" value="Watermelon"/>
+            <column name="price" value="10"/>
+        </insert>
+    </changeSet>
+    <changeSet id="6" author="v.petukhov">
+        <insert tableName="products">
+            <column name="title" value="Sugar"/>
+            <column name="price" value="10"/>
+        </insert>
+    </changeSet>
+    <changeSet id="7" author="v.petukhov">
+        <insert tableName="products">
+            <column name="title" value="Tomato"/>
+            <column name="price" value="11"/>
+        </insert>
+    </changeSet>
+    <changeSet id="8" author="v.petukhov">
+        <insert tableName="products">
+            <column name="title" value="Orange"/>
+            <column name="price" value="12"/>
+        </insert>
+    </changeSet>
+    <changeSet id="9" author="v.petukhov">
+        <insert tableName="products">
+            <column name="title" value="Salt"/>
+            <column name="price" value="3"/>
+        </insert>
+    </changeSet>
+    <changeSet id="10" author="v.petukhov">
+        <insert tableName="products">
+            <column name="title" value="Bag"/>
+            <column name="price" value="1"/>
+        </insert>
+    </changeSet>
+    <changeSet id="create_table_persons" author="v.petukhov">
+        <createTable tableName="persons">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(64)"/>
+            <column name="last_name" type="VARCHAR(64)"/>
+            <column name="email" type="VARCHAR(64)"/>
+            <column name="phone_number" type="VARCHAR(64)"/>
+            <column name="login" type="VARCHAR(64)"/>
+            <column name="password" type="VARCHAR(64)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="ad_person_1" author="v.petukhov">
+        <insert tableName="persons">
+            <column name="first_name" value="Bread"/>
+            <column name="last_name" value="Thompson"/>
+            <column name="email" value="bread@mail.net"/>
+            <column name="phone_number" value="89107894512"/>
+            <column name="login" value="admin"/>
+            <column name="password" value="admin"/>
+        </insert>
+    </changeSet>
+    <changeSet id="create_table_roles" author="v.petukhov">
+        <createTable tableName="roles">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(64)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="add_column_role_id" author="v.petukhov">
+        <addColumn tableName="persons">
+            <column name="role_id" type="UUID"></column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="create_table_orders" author="v.petukhov">
+        <sql>
+            CREATE TABLE orders (id serial, product_id BIGINT REFERENCES products (id), person_id BIGINT REFERENCES persons (id), PRIMARY KEY (id));
+        </sql>
+    </changeSet>
+    <changeSet id="add_column" author="v.petukhov">
+        <addColumn tableName="orders">
+            <column name="quantity" type="INT"></column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="add_role_super-admin" author="v.petukhov">
+        <insert tableName="roles">
+            <column name="id" value="760a2475-3639-4946-a233-7803b9b1ea5c"></column>
+            <column name="name" value="ROLE_SUPER-ADMIN"/>
+        </insert>
+    </changeSet>
+    <changeSet id="add_role_admin" author="v.petukhov">
+        <insert tableName="roles">
+            <column name="id" value="c887a2ee-adc0-42bb-89f0-efe257950503"></column>
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+    </changeSet>
+    <changeSet id="add_person_2" author="v.petukhov">
+        <insert tableName="persons">
+            <column name="first_name" value="John"/>
+            <column name="last_name" value="Connor"/>
+            <column name="email" value="connor@mail.net"/>
+            <column name="phone_number" value="0101001001"/>
+            <column name="login" value="superadmin"/>
+            <column name="password" value="{noop}superadmin"/>
+            <column name="role_id" value="760a2475-3639-4946-a233-7803b9b1ea5c"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>All Products</title>
+    <style>
+        .pagination-div span{border-radius:3px;border:1px solid #999;
+            background-color: yellowgreen;
+            padding:5px;margin:10px 0px 0px 10px;display:inline-block}
+        span.selected{background:#ccf;}
+       .button_form{
+           background-color: dodgerblue;
+           border: 1px;
+           color: wheat;
+           padding: 3px 5px;
+           text-align: center;
+           text-decoration: none;
+           display: inline-block;
+           font-size: 10px;
+           font-weight: bold;
+           margin: 5px 8px;
+           border-radius: 50%;
+       }
+       .order{
+           border: dimgrey 1px;
+           border-radius: 5%;
+           background-color: coral;
+           color: #ccccff;
+           text-align: center;
+           text-decoration: none;
+           display: inline-block;
+       }
+       .price_holder{
+           display: flex;
+           justify-content: center;
+       }
+    </style>
+</head>
+
+<body>
+
+<a class="order" th:href="@{/orders/{login}(login=${person})}">Orders</a>
+<table border="1px" width="100%" bgcolor="silver">
+    <thead>
+    <tr>
+        <th style="width: 40%">Product</th>
+        <th class="price_holder">Price <form th:method="POST" th:action="@{/{sorted}(sorted=${'ASC'})}">
+            <input class="button_form" type="submit" value="Ʌ">
+        </form>
+            <form th:method="POST" th:action="@{/{sorted}(sorted=${'DESC'})}">
+                <input class="button_form" type="submit" value="V">
+            </form>
+            <form th:method="POST" th:action="@{/{sorted}(sorted=${'None'})}">
+                <input class="button_form" type="submit" value="-">
+            </form>
+        </th>
+    </tr>
+    </thead>
+    <tr th:each="product: ${page}">
+        <td><a th:href="@{/{id}(id=${product.getId()})}"
+               th:text="${product.getTitle()}">product</a></td>
+        <td th:text="${product.price}">price</td>
+        <td align="center">
+            <a th:href="@{/orders/newOrder}">Add Product to Order</a>
+        </td>
+    </tr>
+</table>
+
+<br/>
+<hr/>
+<a th:href="@{/new}">Add new Product</a>
+
+<div class="pagination-div">
+    <span th:if="${page.hasPrevious()}">
+        <a th:href="@{/(page=${page.number-1},size=${page.size})}">Previous</a>
+    </span>
+    <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+        <span th:if="${page.number == i}" class="selected">[[${i}+1]]</span>
+        <span th:unless="${page.number == i}">
+             <a th:href="@{/(page=${i},size=${page.size})}">[[${i}+1]]</a>
+        </span>
+    </th:block>
+    <span th:if="${page.hasNext()}">
+        <a th:href="@{/(page=${page.number+1},size=${page.size})}">Next</a>
+    </span>
+</div>
+
+</body>
+</html>

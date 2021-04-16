@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/web-shop
+    username: postgres
+    password: user
+  jpa:
+    show-sql: true
+  liquibase:
+    change-log: classpath:db/changelog/liquibase-changelog.xml
